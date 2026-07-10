@@ -3,12 +3,11 @@ import Queen from '../../../src/engine/pieces/queen';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
-import GameSettings from '../../../src/engine/gameSettings';
 
 describe('Queen', () => {
 
-    let board;
-    beforeEach(() => board = new Board());
+    let board: Board;
+    beforeEach(() => board = new Board(Player.WHITE));
 
     it('can move laterally', () => {
         const queen = new Queen(Player.WHITE);
