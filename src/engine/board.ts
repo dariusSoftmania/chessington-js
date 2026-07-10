@@ -117,16 +117,47 @@ export default class Board {
      */
     getDiagonalSquares(square: Square): Square[] {
         let moves: Square[] = [];
+
         for(let index: number = 1; index <= 7; index++) {
-            if (this.checkBounds(square.row - index, square.col - index))
-                moves.push(new Square(square.row - index, square.col - index));
-            if (this.checkBounds(square.row - index, square.col + index))
-                moves.push(new Square(square.row - index, square.col + index));
-            if (this.checkBounds(square.row + index, square.col - index))
-                moves.push(new Square(square.row + index, square.col - index));
-            if (this.checkBounds(square.row + index, square.col + index))
-                moves.push(new Square(square.row + index, square.col + index));
+            const currentRow: number = square.row - index;
+            const currentColumn: number = square.col - index;
+            if (this.checkBounds(currentRow, currentColumn)) {
+                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+                    break;
+                moves.push(new Square(currentRow, currentColumn));
+            }
         }
+
+        for(let index: number = 1; index <= 7; index++) {
+            const currentRow: number = square.row - index;
+            const currentColumn: number = square.col + index;
+            if (this.checkBounds(currentRow, currentColumn)) {
+                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+                    break;
+                moves.push(new Square(currentRow, currentColumn));
+            }
+        }
+
+        for(let index: number = 1; index <= 7; index++) {
+            const currentRow: number = square.row + index;
+            const currentColumn: number = square.col - index;
+            if (this.checkBounds(currentRow, currentColumn)) {
+                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+                    break;
+                moves.push(new Square(currentRow, currentColumn));
+            }
+        }
+
+        for(let index: number = 1; index <= 7; index++) {
+            const currentRow: number = square.row + index;
+            const currentColumn: number = square.col + index;
+            if (this.checkBounds(currentRow, currentColumn)) {
+                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+                    break;
+                moves.push(new Square(currentRow, currentColumn));
+            }
+        }
+
         return moves;
     }
 
