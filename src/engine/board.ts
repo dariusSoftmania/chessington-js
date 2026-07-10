@@ -52,14 +52,4 @@ export default class Board {
         }
         return board;
     }
-
-    /**
-     * Function to check if a piece is in the bounds of the board
-     *
-     * @param row row of the piece
-     * @param col column of the piece
-     */
-    checkBounds(row: number, col: number): boolean {
-        return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
-    }
 }
