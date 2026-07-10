@@ -60,3 +60,18 @@ export function getKnightSquares(square: Square): Square[] {
             moves.push(new Square(square.row + rows[index], square.col + cols[index]));
     return moves;
 }
+
+/**
+ * Function to get all squares in a radius of 1 from a given square
+ *
+ * @param square starting square
+ */
+export function getKingSquares(square: Square): Square[] {
+    let moves: Square[] = [];
+    const rows: number[] = [1, 1, 0, -1, -1, -1,  0,  1];
+    const cols: number[] = [0, 1, 1,  1,  0, -1, -1, -1];
+    for(let index: number = 0; index <= 7; index++)
+        if (checkBounds(square.row + rows[index], square.col + cols[index]))
+            moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+    return moves;
+}
