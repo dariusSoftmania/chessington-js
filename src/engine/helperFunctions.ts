@@ -1,6 +1,16 @@
 import Square from "./square";
 
 /**
+ * Function to check if a piece is in the bounds of the board
+ *
+ * @param row row of the piece
+ * @param col column of the piece
+ */
+function checkBounds(row: number, col: number): boolean {
+    return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+}
+
+/**
  * Function to get all squares on same row or column with a given square
  *
  * @param square starting square
@@ -37,11 +47,16 @@ export function getDiagonalSquares(square: Square): Square[] {
 }
 
 /**
- * Function to check if a piece is in the bounds of the board
+ * Function to get all squares in an L shape from a given square
  *
- * @param row row of the piece
- * @param col column of the piece
+ * @param square starting square
  */
-function checkBounds(row: number, col: number): boolean {
-    return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+export function getKnightSquares(square: Square): Square[] {
+    let moves: Square[] = [];
+    const rows: number[] = [2, 1, -1, -2, -2, -1,  1,  2];
+    const cols: number[] = [1, 2,  2,  1, -1, -2, -2, -1];
+    for(let index: number = 0; index <= 7; index++)
+        if (checkBounds(square.row + rows[index], square.col + cols[index]))
+            moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+    return moves;
 }
