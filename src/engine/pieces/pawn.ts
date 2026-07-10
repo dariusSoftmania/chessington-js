@@ -11,10 +11,16 @@ export default class Pawn extends Piece {
     public getAvailableMoves(board: Board) {
         let moves: Square[] = [];
         let square: Square = board.findPiece(this);
-        if(this.player === 0)
-            moves.push(new Square(square.row + 1, square.col))
-        else
-            moves.push(new Square(square.row - 1, square.col))
+        if(this.player === 0) {
+            moves.push(new Square(square.row + 1, square.col));
+            if(square.row === 1)
+                moves.push(new Square(square.row + 2, square.col))
+        }
+        else {
+            moves.push(new Square(square.row - 1, square.col));
+            if(square.row === 6)
+                moves.push(new Square(square.row - 2, square.col));
+        }
         return moves;
     }
 }
