@@ -8,10 +8,10 @@ export default class Pawn extends Piece {
         super(player);
     }
 
-    public getAvailableMoves(board: Board) {
+    public getAvailableMoves(board: Board): Square[] {
         let moves: Square[] = [];
-        let square: Square = board.findPiece(this);
-        if(this.player === 0) {
+        const square: Square = board.findPiece(this);
+        if(this.player === Player.WHITE) {
             moves.push(new Square(square.row + 1, square.col));
             if(square.row === 1)
                 moves.push(new Square(square.row + 2, square.col))
