@@ -7,8 +7,8 @@ import Square from '../../../src/engine/square';
 
 describe('Pawn', () => {
 
-    let board;
-    beforeEach(() => board = new Board());
+    let board: Board;
+    beforeEach(() => board = new Board(Player.WHITE));
 
     describe('white pawns', () => {
         
