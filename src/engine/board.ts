@@ -52,4 +52,111 @@ export default class Board {
         }
         return board;
     }
+
+    /**
+     * Function to check if a piece is in the bounds of the board
+     *
+     * @param row row of the piece
+     * @param col column of the piece
+     */
+    private checkBounds(row: number, col: number): boolean {
+        return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+    }
+
+    /**
+     * Function to get all squares on same row with a given square
+     *
+     * @param square starting square
+     */
+    getHorizontalSquares(square: Square): Square[] {
+        let moves: Square[] = [];
+        const initialRow: number = square.row;
+        const initialCol: number = square.col;
+
+        for(let col: number = initialCol - 1; col >= 0; col--) {
+            if (this.getPiece(new Square(initialRow, col)) !== undefined)
+                break;
+            moves.push(new Square(initialRow, col));
+        }
+        for(let col: number = initialCol + 1; col <= 7; col++) {
+            if (this.getPiece(new Square(initialRow, col)) !== undefined)
+                break;
+            moves.push(new Square(initialRow, col));
+        }
+        return moves;
+    }
+
+    /**
+     * Function to get all squares on same column with a given square
+     *
+     * @param square starting square
+     */
+    getVerticalSquares(square: Square): Square[] {
+        let moves: Square[] = [];
+        const initialRow: number = square.row;
+        const initialCol: number = square.col;
+
+        for(let row: number = initialRow - 1; row >= 0; row--) {
+            if (this.getPiece(new Square(row, initialCol)) !== undefined)
+                break;
+            moves.push(new Square(row, initialCol));
+        }
+        for(let row: number = initialRow + 1; row <= 7; row++) {
+            if (this.getPiece(new Square(row, initialCol)) !== undefined)
+                break;
+            moves.push(new Square(row, initialCol));
+        }
+        return moves;
+    }
+
+
+    /**
+     * Function to get all squares on same diagonal with a given square
+     *
+     * @param square starting square
+     */
+    getDiagonalSquares(square: Square): Square[] {
+        let moves: Square[] = [];
+        for(let index: number = 1; index <= 7; index++) {
+            if (this.checkBounds(square.row - index, square.col - index))
+                moves.push(new Square(square.row - index, square.col - index));
+            if (this.checkBounds(square.row - index, square.col + index))
+                moves.push(new Square(square.row - index, square.col + index));
+            if (this.checkBounds(square.row + index, square.col - index))
+                moves.push(new Square(square.row + index, square.col - index));
+            if (this.checkBounds(square.row + index, square.col + index))
+                moves.push(new Square(square.row + index, square.col + index));
+        }
+        return moves;
+    }
+
+    /**
+     * Function to get all squares in an L shape from a given square
+     *
+     * @param square starting square
+     */
+    getKnightSquares(square: Square): Square[] {
+        let moves: Square[] = [];
+        const rows: number[] = [2, 1, -1, -2, -2, -1,  1,  2];
+        const cols: number[] = [1, 2,  2,  1, -1, -2, -2, -1];
+        for(let index: number = 0; index <= 7; index++)
+            if (this.checkBounds(square.row + rows[index], square.col + cols[index]))
+                moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+        return moves;
+    }
+
+    /**
+     * Function to get all squares in a radius of 1 from a given square
+     *
+     * @param square starting square
+     */
+    getKingSquares(square: Square): Square[] {
+        let moves: Square[] = [];
+        const rows: number[] = [1, 1, 0, -1, -1, -1,  0,  1];
+        const cols: number[] = [0, 1, 1,  1,  0, -1, -1, -1];
+        for(let index: number = 0; index <= 7; index++)
+            if (this.checkBounds(square.row + rows[index], square.col + cols[index]))
+                moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+        return moves;
+    }
 }
