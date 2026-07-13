@@ -54,6 +54,7 @@ describe('Knight', () => {
 
         const expectedMoves = [Square.at(1, 2), Square.at(2, 1)];
 
-        moves.should.deep.have.members(expectedMoves);
+        // moves.should.deep.have.members(expectedMoves);
+        moves.should.deep.members(expectedMoves);
     });
 });

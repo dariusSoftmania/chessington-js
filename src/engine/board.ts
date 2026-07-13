@@ -2,6 +2,7 @@ import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
 import Piece from './pieces/piece';
+import King from "./pieces/king";
 
 export default class Board {
     public currentPlayer: Player;
@@ -56,11 +57,10 @@ export default class Board {
     /**
      * Function to check if a piece is in the bounds of the board
      *
-     * @param row row of the piece
-     * @param col column of the piece
+     * @param square square to be checked
      */
-    private checkBounds(row: number, col: number): boolean {
-        return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+    private checkBounds(square: Square): boolean {
+        return (square.row >= 0 && square.row <= 7 && square.col >= 0 && square.col <= 7);
     }
 
     /**
@@ -74,14 +74,22 @@ export default class Board {
         const initialCol: number = square.col;
 
         for(let col: number = initialCol - 1; col >= 0; col--) {
-            if (this.getPiece(new Square(initialRow, col)) !== undefined)
+            const newSquare: Square = new Square(initialRow, col);
+            if (this.getPiece(newSquare) !== undefined) {
+                if(this.getPiece(newSquare)?.player !== this.currentPlayer && !(this.getPiece(newSquare) instanceof King))
+                    moves.push(newSquare);
                 break;
-            moves.push(new Square(initialRow, col));
+            }
+            moves.push(newSquare);
         }
         for(let col: number = initialCol + 1; col <= 7; col++) {
-            if (this.getPiece(new Square(initialRow, col)) !== undefined)
+            const newSquare: Square = new Square(initialRow, col);
+            if (this.getPiece(newSquare) !== undefined) {
+                if(this.getPiece(newSquare)?.player !== this.currentPlayer && !(this.getPiece(newSquare) instanceof King))
+                    moves.push(newSquare);
                 break;
-            moves.push(new Square(initialRow, col));
+            }
+            moves.push(newSquare);
         }
         return moves;
     }
@@ -97,14 +105,22 @@ export default class Board {
         const initialCol: number = square.col;
 
         for(let row: number = initialRow - 1; row >= 0; row--) {
-            if (this.getPiece(new Square(row, initialCol)) !== undefined)
+            const newSquare: Square = new Square(row, initialCol);
+            if (this.getPiece(newSquare) !== undefined) {
+                if(this.getPiece(newSquare)?.player !== this.currentPlayer && !(this.getPiece(newSquare) instanceof King))
+                    moves.push(newSquare);
                 break;
-            moves.push(new Square(row, initialCol));
+            }
+            moves.push(newSquare);
         }
         for(let row: number = initialRow + 1; row <= 7; row++) {
-            if (this.getPiece(new Square(row, initialCol)) !== undefined)
+            const newSquare: Square = new Square(row, initialCol);
+            if (this.getPiece(newSquare) !== undefined) {
+                if(this.getPiece(newSquare)?.player !== this.currentPlayer && !(this.getPiece(newSquare) instanceof King))
+                    moves.push(newSquare);
                 break;
-            moves.push(new Square(row, initialCol));
+            }
+            moves.push(newSquare);
         }
         return moves;
     }
@@ -121,40 +137,44 @@ export default class Board {
         for(let index: number = 1; index <= 7; index++) {
             const currentRow: number = square.row - index;
             const currentColumn: number = square.col - index;
-            if (this.checkBounds(currentRow, currentColumn)) {
-                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+            const newSquare: Square = new Square(currentRow, currentColumn);
+            if (this.checkBounds(newSquare)) {
+                if (this.getPiece(newSquare) !== undefined)
                     break;
-                moves.push(new Square(currentRow, currentColumn));
+                moves.push(newSquare);
             }
         }
 
         for(let index: number = 1; index <= 7; index++) {
             const currentRow: number = square.row - index;
             const currentColumn: number = square.col + index;
-            if (this.checkBounds(currentRow, currentColumn)) {
-                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+            const newSquare: Square = new Square(currentRow, currentColumn);
+            if (this.checkBounds(newSquare)) {
+                if (this.getPiece(newSquare) !== undefined)
                     break;
-                moves.push(new Square(currentRow, currentColumn));
+                moves.push(newSquare);
             }
         }
 
         for(let index: number = 1; index <= 7; index++) {
             const currentRow: number = square.row + index;
             const currentColumn: number = square.col - index;
-            if (this.checkBounds(currentRow, currentColumn)) {
-                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+            const newSquare: Square = new Square(currentRow, currentColumn);
+            if (this.checkBounds(newSquare)) {
+                if (this.getPiece(newSquare) !== undefined)
                     break;
-                moves.push(new Square(currentRow, currentColumn));
+                moves.push(newSquare);
             }
         }
 
         for(let index: number = 1; index <= 7; index++) {
             const currentRow: number = square.row + index;
             const currentColumn: number = square.col + index;
-            if (this.checkBounds(currentRow, currentColumn)) {
-                if (this.getPiece(new Square(currentRow, currentColumn)) !== undefined)
+            const newSquare: Square = new Square(currentRow, currentColumn);
+            if (this.checkBounds(newSquare)) {
+                if (this.getPiece(newSquare) !== undefined)
                     break;
-                moves.push(new Square(currentRow, currentColumn));
+                moves.push(newSquare);
             }
         }
 
@@ -170,9 +190,11 @@ export default class Board {
         let moves: Square[] = [];
         const rows: number[] = [2, 1, -1, -2, -2, -1,  1,  2];
         const cols: number[] = [1, 2,  2,  1, -1, -2, -2, -1];
-        for(let index: number = 0; index <= 7; index++)
-            if (this.checkBounds(square.row + rows[index], square.col + cols[index]))
-                moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+        for(let index: number = 0; index <= 7; index++) {
+            const newSquare: Square = new Square(square.row + rows[index], square.col + cols[index]);
+            if (this.checkBounds(newSquare))
+                moves.push(newSquare);
+        }
         return moves;
     }
 
@@ -185,9 +207,11 @@ export default class Board {
         let moves: Square[] = [];
         const rows: number[] = [1, 1, 0, -1, -1, -1,  0,  1];
         const cols: number[] = [0, 1, 1,  1,  0, -1, -1, -1];
-        for(let index: number = 0; index <= 7; index++)
-            if (this.checkBounds(square.row + rows[index], square.col + cols[index]))
-                moves.push(new Square(square.row + rows[index], square.col + cols[index]));
+        for(let index: number = 0; index <= 7; index++) {
+            const newSquare: Square = new Square(square.row + rows[index], square.col + cols[index]);
+            if (this.checkBounds(newSquare) && this.getPiece(newSquare) === undefined)
+                moves.push(newSquare);
+        }
         return moves;
     }
 }

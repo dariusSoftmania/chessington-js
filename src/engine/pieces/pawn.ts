@@ -12,6 +12,8 @@ export default class Pawn extends Piece {
         let moves: Square[] = [];
         const square: Square = board.findPiece(this);
         if(this.player === Player.WHITE) {
+            if(square.row === 7)
+                return moves;
             let nextRow: number = square.row + 1;
             const col: number = square.col;
             if(board.getPiece(new Square(nextRow, col)) !== undefined)
@@ -22,6 +24,8 @@ export default class Pawn extends Piece {
                 moves.push(new Square(nextRow, col));
         }
         else {
+            if(square.row === 0)
+                return moves;
             let nextRow: number = square.row - 1;
             const col: number = square.col;
             if(board.getPiece(new Square(nextRow, col)) !== undefined)
