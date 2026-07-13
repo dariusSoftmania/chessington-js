@@ -188,8 +188,14 @@ export default class Board {
         const cols: number[] = [0, 1, 1,  1,  0, -1, -1, -1];
         for(let index: number = 0; index <= 7; index++) {
             const newSquare: Square = new Square(square.row + rows[index], square.col + cols[index]);
-            if (this.checkBounds(newSquare) && this.getPiece(newSquare) === undefined)
+            if (this.checkBounds(newSquare)) {
+                if (this.getPiece(newSquare) !== undefined) {
+                    if(this.getPiece(newSquare)?.player !== this.currentPlayer && !(this.getPiece(newSquare) instanceof King))
+                        moves.push(newSquare);
+                    break;
+                }
                 moves.push(newSquare);
+            }
         }
         return moves;
     }
