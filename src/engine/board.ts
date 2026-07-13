@@ -67,7 +67,7 @@ export default class Board {
         let moves: Square[] = [];
         const directionSize: number = directionRow.length;
 
-        for(let directionIndex: number = 0; directionIndex <= directionSize; directionIndex++)
+        for(let directionIndex: number = 0; directionIndex < directionSize; directionIndex++)
             for(let index: number = 1; index <= maximumDistance; index++) {
                 const currentRow: number = square.row + index * directionRow[directionIndex];
                 const currentColumn: number = square.col + index * directionCol[directionIndex];
