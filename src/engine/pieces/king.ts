@@ -11,7 +11,9 @@ export default class King extends Piece {
     public getAvailableMoves(board: Board): Square[] {
         let moves: Square[];
         const square: Square = board.findPiece(this);
-        moves = board.getKingSquares(square);
+        const directionRow: number[]    = [1, 1, 0, -1, -1, -1,  0,  1];
+        const directionColumn: number[] = [0, 1, 1,  1,  0, -1, -1, -1];
+        moves = board.getAvailableSquares(square, directionRow, directionColumn, 1);
         return moves;
     }
 }

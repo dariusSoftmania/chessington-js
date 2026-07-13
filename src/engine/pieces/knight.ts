@@ -11,7 +11,9 @@ export default class Knight extends Piece {
     public getAvailableMoves(board: Board): Square[] {
         let moves: Square[];
         const square: Square = board.findPiece(this);
-        moves = board.getKnightSquares(square);
+        const directionRow: number[] = [2, 1, -1, -2, -2, -1,  1,  2];
+        const directionColumn: number[] = [1, 2,  2,  1, -1, -2, -2, -1];
+        moves = board.getAvailableSquares(square, directionRow, directionColumn, 1);
         return moves;
     }
 }
